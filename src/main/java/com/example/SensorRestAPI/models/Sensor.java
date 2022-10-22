@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "sensor")
 public class Sensor {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,7 +16,7 @@ public class Sensor {
 
     @NotEmpty(message = "Sensor name should be not empty")
     @Size(min = 3, message = "Name length should be more than 2 characters")
-    @Size(max = 30, message = "Name length should be less than 2 characters")
+    @Size(max = 30, message = "Name length should be less than 30 characters")
     @Column(name = "name")
     String name;
 
