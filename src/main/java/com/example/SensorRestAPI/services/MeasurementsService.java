@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +34,11 @@ public class MeasurementsService {
         measurement.setSensor(sensor);
         measurement.setRegisteredAt(LocalDateTime.now());
         measurementsRepository.save(measurement);
+    }
+
+    public int getRainyDaysCount() {
+        List<Measurement> measurementList = measurementsRepository.findByRainingEquals(true);
+        return measurementList.stream().map(x -> x.getRegisteredAt().toLocalDate()).collect(Collectors.toSet()).size();
     }
 
     public List<Measurement> findAll () {

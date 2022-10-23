@@ -8,6 +8,7 @@ import com.example.SensorRestAPI.services.MeasurementsService;
 import com.example.SensorRestAPI.util.ErrorMessage;
 import com.example.SensorRestAPI.util.MeasurementDTOValidator;
 import com.example.SensorRestAPI.util.NotValidMeasurementException;
+import com.example.SensorRestAPI.util.RainyDaysCount;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,17 +57,20 @@ public class MeasurementsController {
         }
 
         Measurement measurement = convertToMeasurement(measurementDTO);
-
         measurementsService.save(measurement);
-
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
 
-    @GetMapping("/123")
+    @GetMapping
     public List<MeasurementDTO> getAllMeasurements() {
         List<Measurement> measurements = measurementsService.findAll();
         return convertToMeasurementDTOList(measurements);
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public RainyDaysCount getRainyDaysCount() {
+        return new RainyDaysCount(measurementsService.getRainyDaysCount());
     }
 
     @ExceptionHandler

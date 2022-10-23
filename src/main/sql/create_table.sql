@@ -14,3 +14,7 @@ CREATE TABLE measurement (
     registered_at timestamp NOT NULL,
     sensor_id int REFERENCES sensor(id) ON DELETE CASCADE
 );
+
+
+TRUNCATE TABLE sensor, measurement;
+
