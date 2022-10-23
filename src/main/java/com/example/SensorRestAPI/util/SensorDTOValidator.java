@@ -14,7 +14,7 @@ import java.util.Optional;
 @Component
 public class SensorDTOValidator implements Validator {
 
-    private SensorsService sensorsService;
+    private final SensorsService sensorsService;
 
     @Autowired
     public SensorDTOValidator(SensorsService sensorsService) {

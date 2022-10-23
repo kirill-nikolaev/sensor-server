@@ -2,14 +2,17 @@ package com.example.SensorRestAPI.dto;
 
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class MeasurementDTO {
 
-    @Range(min = -100, max = 100, message = "The value must be greater than -100 and less than 100")
+    @Range(min = -100, max = 100, message = "Value must be greater than -100 and less than 100")
     private double value;
 
     private boolean raining;
 
-    private SensorDTO sensorDTO;
+    private SensorDTO sensor;
 
 
     public double getValue() {
@@ -28,11 +31,11 @@ public class MeasurementDTO {
         this.raining = raining;
     }
 
-    public SensorDTO getSensorDTO() {
-        return sensorDTO;
+    public SensorDTO getSensor() {
+        return sensor;
     }
 
-    public void setSensorDTO(SensorDTO sensorDTO) {
-        this.sensorDTO = sensorDTO;
+    public void setSensor(SensorDTO sensor) {
+        this.sensor = sensor;
     }
 }

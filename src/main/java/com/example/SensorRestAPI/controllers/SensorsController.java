@@ -3,6 +3,8 @@ package com.example.SensorRestAPI.controllers;
 import com.example.SensorRestAPI.dto.SensorDTO;
 import com.example.SensorRestAPI.models.Sensor;
 import com.example.SensorRestAPI.services.SensorsService;
+import com.example.SensorRestAPI.util.ErrorMessage;
+import com.example.SensorRestAPI.util.NotValidMeasurementException;
 import com.example.SensorRestAPI.util.NotValidSensorNameException;
 import com.example.SensorRestAPI.util.SensorDTOValidator;
 import org.modelmapper.ModelMapper;
@@ -15,14 +17,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sensors")
 public class SensorsController {
 
-    private SensorsService sensorsService;
-    private ModelMapper modelMapper;
-    private SensorDTOValidator sensorDTOValidator;
+    private final SensorsService sensorsService;
+    private final ModelMapper modelMapper;
+    private final SensorDTOValidator sensorDTOValidator;
 
     @Autowired
     public SensorsController(SensorsService sensorsService, ModelMapper modelMapper, SensorDTOValidator sensorDTOValidator) {
@@ -37,9 +40,14 @@ public class SensorsController {
         sensorDTOValidator.validate(sensorDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            FieldError error = bindingResult.getFieldError();
-            String message = error.getDefaultMessage();
-            throw new NotValidSensorNameException(message);
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            StringBuilder message = new StringBuilder();
+
+            for (FieldError fieldError: fieldErrors) {
+                message.append(fieldError.getDefaultMessage()).append("&");
+            }
+            message.deleteCharAt(message.length() - 1);
+            throw new NotValidSensorNameException(message.toString());
         }
 
         Sensor sensor = convertToSensor(sensorDTO);
@@ -50,10 +58,9 @@ public class SensorsController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<HashMap<String, String>> exceptionHandler(NotValidSensorNameException e) {
-        HashMap<String, String> body = new HashMap<>();
-        body.put("message", e.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorMessage> exceptionHandler(NotValidSensorNameException e) {
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     private Sensor convertToSensor(SensorDTO sensorDTO) {
