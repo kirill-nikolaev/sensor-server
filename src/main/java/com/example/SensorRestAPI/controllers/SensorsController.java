@@ -4,7 +4,6 @@ import com.example.SensorRestAPI.dto.SensorDTO;
 import com.example.SensorRestAPI.models.Sensor;
 import com.example.SensorRestAPI.services.SensorsService;
 import com.example.SensorRestAPI.util.ErrorMessage;
-import com.example.SensorRestAPI.util.NotValidMeasurementException;
 import com.example.SensorRestAPI.util.NotValidSensorNameException;
 import com.example.SensorRestAPI.util.SensorDTOValidator;
 import org.modelmapper.ModelMapper;
@@ -16,7 +15,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController

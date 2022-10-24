@@ -1,5 +1,9 @@
 package com.example.SensorRestAPI.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -7,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "sensor")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Sensor {
 
     @Id
@@ -22,28 +29,4 @@ public class Sensor {
 
     @OneToMany(mappedBy = "sensor")
     List<Measurement> measurements;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Measurement> getMeasurements() {
-        return measurements;
-    }
-
-    public void setMeasurements(List<Measurement> measurements) {
-        this.measurements = measurements;
-    }
 }

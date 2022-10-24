@@ -3,7 +3,6 @@ package com.example.SensorRestAPI.controllers;
 
 import com.example.SensorRestAPI.dto.MeasurementDTO;
 import com.example.SensorRestAPI.models.Measurement;
-import com.example.SensorRestAPI.models.Sensor;
 import com.example.SensorRestAPI.services.MeasurementsService;
 import com.example.SensorRestAPI.util.ErrorMessage;
 import com.example.SensorRestAPI.util.MeasurementDTOValidator;
